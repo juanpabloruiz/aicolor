@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>AI</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.1.1/jscolor.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/brain/0.6.3/brain.min.js"></script>
+
+	<script>
+
+	var network = new brain.NeuralNetwork();
+
+	network.train([
+		{input: {rojo:0, verde:0, azul:0}, output: {color:1}},
+		{input: {rojo:1, verde:1, azul:1}, output: {color:0}}
+	]);
+
+	function update(color) {
+		console.log(color.rgb);
+		var div = document.getElementById("sitio");
+		div.style.background = "#" + color;
+
+		var entrada = {
+			rojo: color.rgb[0]/255,
+			verder: color.rgb[1]/255,
+			azul: color.rgb[2]/255
+		}
+
+		var resultado = network.run(entrada);
+		console.log(resultado);
+
+		if(resultado.color > .5) {
+			div.style.color = "white";
+		} else {
+			div.style.color = "black";
+		}
+	}
+	</script>
+
+</head>
+<body id="sitio">
+
+	<input data-jscolor="{onFineChange:'update(this)'}" value="cc66ff">
+	<h1 style="font-size: 4rem;margin-left: 50%;text-transform: uppercase;">Inteligencia Artificial</h1>
+
+
+
+</body>
+</html>
